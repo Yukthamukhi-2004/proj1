@@ -1,3 +1,10 @@
+/*useEffect can't use async-because,useEffect either return ntg or
+cleanup function,async always returns a promise.
+.useEffect should be synchronus
+
+// Returns Promise<pending> →never reaches synchronous-> React confused!
+So, use .then() */
+
 import { useEffect, useState } from "react";
 
 function App() {
