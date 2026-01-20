@@ -4,7 +4,6 @@ cleanup function,async always returns a promise.
 
 // Returns Promise<pending> →never reaches synchronous-> React confused!
 So, use .then() */
-
 import { useEffect, useState } from "react";
 
 function App() {
