@@ -1,54 +1,14 @@
-import React from "react";
-import { useState } from "react";
+// In this assignment, you will create a component that renders a large list of sentences and includes an input field for filtering these items.
+// The goal is to use useMemo to optimize the filtering process, ensuring the list is only re-calculated when necessary (e.g., when the filter criteria changes).
+// You will learn something new here, specifically how you have to pass more than one value in the dependency array
 
-function App() {
-  const [activeTodo, setActiveTodo] = useState([]);
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      items: ["milk", "bread", "eggs", "sugar"],
-    },
-    {
-      id: 2,
-      items: ["carrots", "cucumber", "beetroot", "avacado"],
-    },
-    {
-      id: 3,
-      items: ["tomato", "potato", "ladies finger", "bottle gaurd"],
-    },
-    {
-      id: 4,
-      items: ["pasta", "maggie", "burger", "pizza"],
-    },
-  ]);
+ import React from "react";
+import {useState,useMemo} from "react";
 
-  function getGrocery(id) {
-    const selected = todos.filter((todos) => todos.id === id);
-    setActiveTodo(selected[0]);
-  }
+function App(){
 
-  const currentItems = activeTodo ? activeTodo.items : [];
+  return(
 
-  return (
-    <div>
-      <button onClick={() => getGrocery(1)}>1</button>
-      <button onClick={() => getGrocery(2)}>2</button>
-      <button onClick={() => getGrocery(3)}>3</button>
-      <button onClick={() => getGrocery(4)}>4</button>
-
-      <h2>Grocery Shopping</h2>
-
-      <Todo items={currentItems} />
-    </div>
-  );
+  )
 }
-
-function Todo({ items }) {
-  return (
-    <div>
-      <h3>{items}</h3>
-    </div>
-  );
-}
-
-export default App;
+export default App; 
