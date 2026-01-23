@@ -64,62 +64,45 @@ function FilterTable() {
   }, [filterCategory]);
   const getStatusBadge = (status) => {
     const baseClass = "px-3 py-1 rounded-full text-xs font-bold";
-    return status === "In Stock"
-      ? `${baseClass} bg-green-100 text-green-800`
-      : `${baseClass} bg-red-100 text-red-800`;
+    return status === "In Stock" ? `${baseClass} ` : `${baseClass} `;
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <div className="mb-8 flex flex-col lg:flex-row gap-4 items-center justify-between bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-gray-800">Product Inventory</h2>
-        <div className="flex items-center gap-4">
-          <label className="font-medium text-gray-700">Filter:</label>
+    <div>
+      <div>
+        <h2 className="font-bold text-gray-800">Product Inventory</h2>
+        <div>
+          <label>Filter:</label>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option>All</option>
             <option>Electronics</option>
             <option>Clothing</option>
             <option>Footwear</option>
           </select>
-          <span className="font-semibold text-gray-700">
-            Showing: {filteredProducts.length} items
-          </span>
+          <span>Showing: {filteredProducts.length} items</span>
         </div>
       </div>
 
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="w-full bg-white border-collapse">
+      <div>
+        <table>
           <thead>
-            <tr className="bg-gray-50">
-              <th className=" font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th className=" font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th className=" font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </th>
-              <th className=" font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50 border-b">
-                <td className="px-6 py-4 font-medium text-gray-900">
-                  {product.name}
-                </td>
-                <td className="px-6 py-4 text-gray-700">{product.category}</td>
-                <td className="px-6 py-4 font-semibold text-green-600">
-                  ${product.price.toLocaleString()}
-                </td>
-                <td className="px-6 py-4">
+              <tr key={product.id}>
+                <td>{product.name}</td>
+                <td>{product.category}</td>
+                <td>${product.price.toLocaleString()}</td>
+                <td>
                   <span className={getStatusBadge(product.status)}>
                     {product.status}
                   </span>
@@ -129,9 +112,7 @@ function FilterTable() {
           </tbody>
         </table>
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            No products found for "{filterCategory}"
-          </div>
+          <div>No products found for "{filterCategory}"</div>
         )}
       </div>
     </div>
