@@ -1,122 +1,128 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import "./pizza.css";
 
-function FilterTable() {
-  const [filterCategory, setFilterCategory] = useState("All");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const pizzaData = [
+  {
+    name: "Focaccia",
+    ingrediants: "Bread with italian olive oil and rosemary",
+    price: 6,
+    photoName: "./pizza 1.jpg",
+    SoldOut: false,
+  },
+  {
+    name: "Pizza Margherita",
+    ingrediants: "Tomato and mozarella",
+    price: 10,
+    photoName: "./pizza 2.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza fungi",
+    ingrediants: "Tomato,mozarella,mushrooms, and onion",
+    price: 12,
+    photoName: "./pizza 3.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Salamino",
+    ingrediants: "Tomato,mozarella and pepperoni",
+    price: 15,
+    photoName: "./pizza 4.jpg",
+    soldOut: true,
+  },
+];
 
-  const products = [
-    {
-      id: 1,
-      name: "Laptop",
-      category: "Electronics",
-      price: 999,
-      status: "In Stock",
-    },
-    {
-      id: 2,
-      name: "Phone",
-      category: "Electronics",
-      price: 599,
-      status: "Out of Stock",
-    },
-    {
-      id: 3,
-      name: "Shirt",
-      category: "Clothing",
-      price: 29,
-      status: "In Stock",
-    },
-    {
-      id: 4,
-      name: "Jeans",
-      category: "Clothing",
-      price: 79,
-      status: "In Stock",
-    },
-    {
-      id: 5,
-      name: "Headphones",
-      category: "Electronics",
-      price: 199,
-      status: "In Stock",
-    },
-    {
-      id: 6,
-      name: "Shoes",
-      category: "Footwear",
-      price: 89,
-      status: "Out of Stock",
-    },
-  ];
-
-  /* const filteredProducts = useMemo(() => {
-    if (filterCategory === "All") return products;
-    return products.filter((p) => p.category === filterCategory);
-  }, [filterCategory]);
- */
-  useEffect(() => {
-    if (filterCategory === "All") {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter((p) => p.category === filterCategory);
-      setFilteredProducts(filtered);
-    }
-  }, [filterCategory]);
-  const getStatusBadge = (status) => {
-    const baseClass = "px-3 py-1 rounded-full text-xs font-bold";
-    return status === "In Stock" ? `${baseClass} ` : `${baseClass} `;
-  };
-
+function App() {
   return (
-    <div>
-      <div>
-        <h2 className="font-bold text-gray-800">Product Inventory</h2>
-        <div>
-          <label>Filter:</label>
-          <select
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-          >
-            <option>All</option>
-            <option>Electronics</option>
-            <option>Clothing</option>
-            <option>Footwear</option>
-          </select>
-          <span>Showing: {filteredProducts.length} items</span>
-        </div>
-      </div>
-
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{product.category}</td>
-                <td>${product.price.toLocaleString()}</td>
-                <td>
-                  <span className={getStatusBadge(product.status)}>
-                    {product.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {filteredProducts.length === 0 && (
-          <div>No products found for "{filterCategory}"</div>
-        )}
-      </div>
+    <div className="body">
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
 
-export default FilterTable;
+function Header() {
+  return (
+    <header className="heade footer">
+      <h1>Fast React Pizza</h1>
+    </header>
+  );
+}
+function Menu() {
+  return (
+    <main>
+      <h2>Our Menu</h2>
+      <ul className="Menu">
+        {/* {pizzaData.map((pizza) => (
+          <Pizza
+            name={pizza.name}
+            ingrediants={pizza.ingrediants}
+            price={pizza.price}
+            photoName={pizza.photoName}
+            soldOut={pizza.soldOut}
+          />
+        ))} (way1)*/}
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} /> //best way(way2)
+        ))}
+      </ul>
+    </main>
+  );
+}
+function Pizza({ pizzaObj }) {
+  return (
+    <li className="pizza">
+      <img className="imgs" src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingrediants}</p>
+        <span>{pizzaObj.price + 4}</span>
+        <h4>{pizzaObj.soldOut ? "SOLD OUT" : null}</h4>
+      </div>
+    </li>
+  );
+}
+/* function Pizza(props) {
+
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingrediants}</p>
+        <span>{props.pizzaObj.price + 4}</span>
+        <h4>{props.pizzaObj.soldOut}</h4>
+      </div>
+    </li>
+  );
+} */
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closehour = 22;
+  const isOpen = hour >= openhour && hour <= closehour;
+  console.log(isOpen);
+  //component can render with multiple returns
+  if (!isOpen)
+    return (
+      <p>
+        We're happy to Welcome u between {openhour}:00 and {closehour}:00.
+      </p>
+    );
+  return (
+    <footer>
+      {isOpen && (
+        <div>
+          <p>We're Open</p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
+  ); //conditional rendering using & operator
+  //if condition before & is true ,then 2nd part will render
+  //if condition doesnt satisfy,its doesnt show 2nd part
+}
+
+export default App;

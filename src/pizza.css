@@ -1,0 +1,19 @@
+.body {
+  background-color: "beige";
+}
+
+.pizza {
+  display: flex;
+  width: 1000px;
+  height: 400px;
+}
+.imgs {
+  display: block;
+  width: 500px;
+  height: 400px;
+}
+.Menu {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
