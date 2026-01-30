@@ -1,69 +1,130 @@
-import React, { useState } from "react";
-import "./styles/flashcards.css";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-function App() {
-  return (
-    <div className="flashcards">
-      <Card />
-    </div>
-  );
-}
-
-const questions = [
-  {
-    id: 1,
-    question: "What language is React based on?",
-    answer: "JavaScript",
-  },
-  {
-    id: 2,
-    question: "What are the building blocks of React apps?",
-    answer: "Components",
-  },
-  {
-    id: 3,
-    question:
-      "What's the name of the syntax we use to describe to UI in React?",
-    answer: "JSX",
-  },
-  {
-    id: 4,
-    question: "How to pass data from to child components?",
-    answer: "Props",
-  },
-  {
-    id: 5,
-    question: "How to give components memory?",
-    answer: "State",
-  },
-  {
-    id: 6,
-    question:
-      "What do we call an input element that is completely synchronous with state?",
-    answer: "Controlled Elements",
-  },
+const employees = [
+  { id: 1, name: "Alice Johnson", role: "Frontend Dev" },
+  { id: 2, name: "Bob Smith", role: "Backend Dev" },
+  { id: 3, name: "Charlie Brown", role: "Designer" },
 ];
 
-function Card() {
-  const [selectedId, setSelectedId] = useState(1);
+function StarRating({ maxRating = 5, onSetRating }) {
+  const [rating, setRating] = useState(0);
 
-  function handleClick(id) {
-    setSelectedId(id !== selectedId ? id : null);
+  function handleRate(rate) {
+    setRating(rate);
+    onSetRating(rate);
   }
 
   return (
-    <div className="card">
-      {questions.map((card) => (
-        <div
-          key={card.id}
-          onClick={() => handleClick(card.id)}
-          className={card.id === selectedId ? "selected" : ""}
+    <div style={{ display: "flex", gap: "4px", cursor: "pointer" }}>
+      {Array.from({ length: maxRating }, (_, i) => (
+        <span
+          key={i}
+          onClick={() => handleRate(i + 1)}
+          style={{
+            fontSize: "24px",
+            color: i < rating ? "#fcc419" : "#dcdcdc",
+          }}
         >
-          <p>{card.id === selectedId ? card.answer : card.question}</p>
-        </div>
+          ★
+        </span>
       ))}
     </div>
   );
 }
 
-export default App;
+StarRating.propTypes = {
+  maxRating: PropTypes.number,
+  onSetRating: PropTypes.func.isRequired,
+};
+
+function Box({ children }) {
+  return (
+    <div
+      style={{
+        backgroundColor: "#f9f9f9",
+        padding: "20px",
+        borderRadius: "10px",
+        width: "300px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ReviewForm({ employee }) {
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert(`Submitted for ${employee.name}: ${rating} Stars - "${comment}"`);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h3>Review for {employee.name}</h3>
+      <p>{employee.role}</p>
+
+      <div style={{ marginBottom: "10px" }}>
+        <StarRating maxRating={5} onSetRating={setRating} />
+      </div>
+
+      <textarea
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Write a review..."
+        rows="4"
+        style={{ width: "100%", padding: "8px" }}
+      />
+      <button style={{ marginTop: "10px", padding: "8px 16px" }}>Submit</button>
+    </form>
+  );
+}
+
+export default function App() {
+  const [selectedId, setSelectedId] = useState(null);
+
+  const selectedEmployee = employees.find((e) => e.id === selectedId);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        padding: "40px",
+        justifyContent: "center",
+      }}
+    >
+      <Box>
+        <h2 style={{ marginTop: 0 }}>Team</h2>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          {employees.map((e) => (
+            <li
+              key={e.id}
+              onClick={() => setSelectedId(e.id)}
+              style={{
+                padding: "10px",
+                cursor: "pointer",
+                background: e.id === selectedId ? "#e0e7ff" : "transparent",
+                borderRadius: "6px",
+              }}
+            >
+              {e.name}
+            </li>
+          ))}
+        </ul>
+      </Box>
+
+      <Box>
+        {selectedEmployee ? (
+          <ReviewForm key={selectedEmployee.id} employee={selectedEmployee} />
+        ) : (
+          <p>Select an employee to review</p>
+        )}
+      </Box>
+    </div>
+  );
+}

@@ -45,7 +45,7 @@ const questions = [
 ];
 
 function Card() {
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedId, setSelectedId] = useState(0);
 
   function handleClick(id) {
     setSelectedId(id !== selectedId ? id : null);
