@@ -1,0 +1,12 @@
+Conditional Rendering:
+Conditional rendering is used whenever you want to show, hide, or change 
+elements on the screen based on a specific situation (state).
+ways: 1. ternary Operator
+
+      2.The "This OR That" Logic (Login/Logout):
+      {isLoggedIn ? <UserDashboard /> : <LoginForm />}
+
+      3.The "Short Circuit" Logic (The && Operator):
+
+      {isFinished && <span>✅ Completed</span>}
+      Logic: If isFinished is true, React continues and renders the span. If false, it stops immediately.

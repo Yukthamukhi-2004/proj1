@@ -41,21 +41,34 @@ export default function App() {
             Step {step}:{messages[step - 1]}
           </p>
           <div className="directions">
-            <button
-              style={{ backgroundColor: "rgb(134, 56, 134)", color: "white" }}
+            <Button
+              bgColor="rgb(134, 56, 134)"
+              txtcolor="#fff"
               onClick={handlePrevious}
             >
-              Previous
-            </button>
-            <button
-              style={{ backgroundColor: "rgb(134, 56, 134)", color: "white" }}
+              <span>👈</span>Previous
+            </Button>
+            <Button
+              bgColor="rgb(134, 56, 134)"
+              txtcolor="#fff"
               onClick={handleNext}
             >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+              Next <span>👉</span> /*things between the open and close tags can
+              be consider as children and passed as prop in its component*/
+            </Button>                               |//called as "Children prop:Making Reusable button"
+          </div>                                    |
+        </div>                                      |
+      )}                                            |
+    </div>                                          |
+  );                                                |
+}                                                   👇
+function Button({ bgColor, txtcolor, onClick, children }) {
+  return (
+    <button
+      style={{ backgroundColor: "rgb(134, 56, 134)", color: "#fff" }}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
