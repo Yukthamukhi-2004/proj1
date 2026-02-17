@@ -1,0 +1,22 @@
+                  useState
+
+1.CREATING STATE:
+      |
+      |
+      |---a. Simple: const [count,setCount]=useState(23);
+      |
+      |
+      |
+      |----b. Based on function: const [count,setCount]=useState(()=>localStorage.getItem('count'));
+            (lazy evaluation)---->function must be pur and accept no arguments.called only on initial render.
+
+
+2.UPDATING STATE:
+      |
+      |
+      |----a.simple: setCount(1000);
+      |
+      |
+      |----b.Based on current State: setCount((c)=>c+1)  ----> function must be pure and return next state. 
+
+.while updating state ,make sure to Not mutate objects or arrays ,but to replace them.               

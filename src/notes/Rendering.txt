@@ -10,3 +10,27 @@ ways: 1. ternary Operator
 
       {isFinished && <span>✅ Completed</span>}
       Logic: If isFinished is true, React continues and renders the span. If false, it stops immediately.
+
+
+Side Effect:
+effect which interacts b/w react component and outside the component.
+ex: data fetching,setting up subscriptions,setting timers,manually accessing in DOM.
+->where to place these side effects:-1. inside Event Handlers(other than render Logic)->triggered by events(onClick,onSubmit,etc..)
+                                     2. useEffect->triggered by Rendering
+
+useEffect:Allows us to write code that will run at different moments :mount,
+                                                                      re-render,
+                                                                      unmount.
+
+
+
+
+
+
+
+
+
+
+
+
+
